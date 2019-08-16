@@ -8,22 +8,22 @@ from flask import abort, Flask, jsonify, request, Response
 
 app = Flask(__name__)
 
+#create a new slack web client()
+slack_token = os.environ["SLACK_API_TOKEN"]  
+client = SlackWebClient(slack_token)
 
 @app.route('/leave', methods=['POST'])
 def leave():
     if not is_request_valid(request):
         abort(400)
 
-    slack_token = os.environ["SLACK_API_TOKEN"]  
     channel_id = request.form['channel_id']
     
     if request.form['text'] == 'list':
         all_leaves(channel_id)
     else:
-        #create a new slack web client()
-        client = SlackWebClient(slack_token, channel_id)
         message = leave_form_message()
-        client.postMessage(message)
+        client.postMessage(channel_id, message)
         
         return jsonify(code=200)
 
@@ -32,14 +32,14 @@ def all_leaves(channel_id):
     if not is_request_valid(request):
         abort(400)
 
-    slack_token = os.environ["SLACK_API_TOKEN"]  
-
     leaves_response = get_leaves()
     
-    #create a new slack web client()
-    client = SlackWebClient(slack_token, channel_id)
     message = my_leaves_message(leaves_response)
-    client.postMessage(message)
+    client.postMessage(channel_id, message)
     
     return jsonify(code=200)
+    
+
+if __name__ == "__main__":
+    app.run(debug=True)
     

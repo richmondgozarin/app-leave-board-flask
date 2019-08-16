@@ -3,8 +3,7 @@ import slack
 
 class SlackWebClient:
 
-    def __init__(self, api_token, channel):
-        self.channel = channel
+    def __init__(self, api_token):
         self.api_token = api_token
 
     def webClient(self):
@@ -12,7 +11,7 @@ class SlackWebClient:
 
         return client
 
-    def postMessage(self, message:object): 
+    def postMessage(self, channel: str, message:object): 
         client = self.webClient()
         
-        return client.chat_postMessage(channel=self.channel, **message)
+        return client.chat_postMessage(channel=channel, **message)
