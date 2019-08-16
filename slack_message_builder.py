@@ -200,11 +200,6 @@ def my_leaves_message(data: list):
                 }
             }
 
-    FIELDS = {
-        "type": "section",
-        "fields": []
-    }
-
     ACTION_BUTTONS = {
         "type": "actions",
         "elements": [
@@ -226,6 +221,10 @@ def my_leaves_message(data: list):
     }
 
     for field in data:
+        FIELDS = {
+            "type": "section",
+            "fields": []
+        }
         
         message['blocks'].append(TITLE)
         leave_record = [
