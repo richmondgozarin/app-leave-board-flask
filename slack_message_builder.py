@@ -2,7 +2,7 @@
 
 def leave_form_message():
     message = {
-        "blocks": [
+        "attachments": [
             {
                 "type": "section",
                 "text": {
@@ -217,7 +217,7 @@ def my_leaves_message(data: list):
     
     
     message = {
-        "blocks": []
+        "attachments": []
     }
 
     for field in data:
